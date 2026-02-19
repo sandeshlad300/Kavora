@@ -19,6 +19,10 @@ dependencyResolutionManagement {
     }
 }
 
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+
 rootProject.name = "Kavora"
 include(":app")
- 
+include(":core")
+include(":data")
