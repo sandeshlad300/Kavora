@@ -26,3 +26,6 @@ rootProject.name = "Kavora"
 include(":app")
 include(":core")
 include(":data")
+include(":domain")
+include(":feature-splash")
+include(":feature-intro")
