@@ -8,6 +8,7 @@ import com.tourism.core.navigation.Navigator
 import com.tourism.core.navigation.composable
 import com.tourism.feature_splash.SplashFeatureNavigation
 import com.tourism.feature_intro.IntroFeatureNavigation
+import com.tourism.feature_onboarding.OnboardingFeatureNavigation
 import com.tourism.kavora.AppUiState
 
 /**
@@ -29,9 +30,9 @@ object AppNavigation : FeatureNavigation {
             this@registerDestinations.registerDestinations(navigator)
         }
 
-        // Placeholder screens for other destinations
-        composable(AppDestinations.Onboarding) { _ ->
-            androidx.compose.material3.Text("Onboarding Screen - Coming Soon")
+        // Register onboarding feature
+        with(OnboardingFeatureNavigation) {
+            this@registerDestinations.registerDestinations(navigator)
         }
 
         composable(AppDestinations.Home) { _ ->

@@ -1,6 +1,7 @@
 package com.tourism.feature_intro
 
 import androidx.navigation.NavGraphBuilder
+import com.tourism.core.navigation.AppDestinations
 import com.tourism.core.navigation.FeatureNavigation
 import com.tourism.core.navigation.NavigationDestination
 import com.tourism.core.navigation.Navigator
@@ -11,14 +12,27 @@ import com.tourism.core.navigation.composable
  * This owns the actual Intro composable for the "intro" route.
  */
 object IntroFeatureNavigation : FeatureNavigation {
-    override val baseRoute: String = "intro"
 
-    override fun NavGraphBuilder.registerDestinations(navigator: Navigator) {
+    override val baseRoute: String = IntroDestination.route
+
+    override fun NavGraphBuilder.registerDestinations(
+        navigator: Navigator
+    ) {
         composable(IntroDestination) { _ ->
             IntroScreen(
-                onContinue = {
-                    // Later you can navigate to onboarding/home using navigator
-                }
+                onNextClick = {
+                    navigator.navigate(AppDestinations.Onboarding) {
+                        popUpTo(IntroDestination.route) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                },
+                onSkipClick = {
+                    navigator.navigate(AppDestinations.Home) {
+                        popUpTo(IntroDestination.route) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                },
+                currentPage = 0
             )
         }
     }

@@ -1,5 +1,9 @@
 package com.tourism.feature_splash
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.*
 import androidx.hilt.navigation.compose.hiltViewModel
 
@@ -9,15 +13,30 @@ import androidx.hilt.navigation.compose.hiltViewModel
  */
 @Composable
 fun SplashRoute(
-    onFinished: () -> Unit = {},
+    onFinished: () -> Unit,
     viewModel: SplashViewModel = hiltViewModel()
 ) {
     val isFinished by viewModel.isFinished.collectAsState()
 
-    if (isFinished) {
-        LaunchedEffect(Unit) {
+    // Animate progress independently
+    val progress = remember { Animatable(0f) }
+
+    LaunchedEffect(Unit) {
+        progress.animateTo(
+            targetValue = 1f,
+            animationSpec = tween(
+                durationMillis = 3000,
+                easing = LinearEasing
+            )
+        )
+    }
+
+    // Navigate only once
+    LaunchedEffect(isFinished) {
+        if (isFinished) {
             onFinished()
         }
     }
-    SplashScreen()
+
+    SplashScreen(progress = progress.value)
 }
